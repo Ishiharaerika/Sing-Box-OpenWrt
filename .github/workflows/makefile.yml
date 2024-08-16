@@ -1,0 +1,61 @@
+name: Sing-Box Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up OpenWrt build environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential git zlib1g-dev libncurses5-dev gawk flex quilt libssl-dev libelf-dev bison 
+
+      - name: Set up Go environment
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.x' 
+
+      - name: Clone OpenWrt source
+        run: |
+          git clone https://git.openwrt.org/openwrt/openwrt.git -b openwrt-23.05
+          cd openwrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Copy Makefile to OpenWrt package directory
+        run: |
+          mkdir -p openwrt/package/sing-box 
+          cp sing-box/Makefile openwrt/package/sing-box/Makefile
+
+      - name: Configure OpenWrt
+        run: |
+          cd openwrt
+          make defconfig
+
+      - name: Rebuild necessary components
+        run: |
+          cd openwrt
+          make {toolchain,target,package/fail2ban}/compile -j$(nproc)
+
+      - name: Build Sing-Box package
+        run: |
+          cd openwrt
+          make package/sing-box/compile -j$(nproc) 
+
+      - name: Find IPK files
+        id: find_ipks
+        run: |
+          IPK_FILES=$(find bin -name "*.ipk" -type f | tr '\n' ' ')
+          echo "::set-output name=ipk_files::$IPK_FILES"
+
+      - name: Upload IPK files
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipk-packages
+          path: ${{ steps.find_ipks.outputs.ipk_files }}

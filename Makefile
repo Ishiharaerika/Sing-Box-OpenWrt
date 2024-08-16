@@ -14,31 +14,15 @@ PKG_LICENSE:=GPL-3.0-or-later
 PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=IshiharaErika
 
-# Hardcode configuration options
-CONFIG_SINGBOX_WITH_ACME=y
-CONFIG_SINGBOX_WITH_CLASH_API=y
-CONFIG_SINGBOX_WITH_DHCP=y
-CONFIG_SINGBOX_WITH_ECH=y
-CONFIG_SINGBOX_WITH_EMBEDDED_TOR=n
-CONFIG_SINGBOX_WITH_GRPC=y
-CONFIG_SINGBOX_WITH_GVISOR=y
-CONFIG_SINGBOX_WITH_QUIC=y
-CONFIG_SINGBOX_WITH_REALITY_SERVER=y
-CONFIG_SINGBOX_WITH_UTLS=y
-CONFIG_SINGBOX_WITH_V2RAY_API=y
-CONFIG_SINGBOX_WITH_WIREGUARD=y
-
 PKG_BUILD_DEPENDS:=golang/host
 PKG_BUILD_PARALLEL:=1
 PKG_BUILD_FLAGS:=no-mips16
 
 GO_PKG:=github.com/Ishiharaerika/sing-box-alpha
-GO_PKG_BUILD_PKG:=github.com/Ishiharaerika/sing-box-alpha/cmd/sing-box
+GO_PKG_BUILD_PKG:=$(GO_PKG)/cmd/sing-box
 
-GO_PKG_LDFLAGS_X:=github.com/Ishiharaerika/sing-box-alpha/constant
-
-include /home/erika/openwrt/include/package.mk
-include /home/erika/openwrt/feeds/packages/lang/golang/golang-package.mk
+include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/golang-package.mk
 
 define Package/sing-box-alpha
 	TITLE:=Just for test.
@@ -52,12 +36,13 @@ define Package/sing-box-alpha/description
 	sing-box-alpha for test.
 endef
 
-define Package/sing-box/config
+define Package/sing-box-alpha/config
 	menu "Select build options"
-		depends on PACKAGE_sing-box
+		depends on PACKAGE_sing-box-alpha
 
 		config SINGBOX_WITH_ACME
 			bool "Build with ACME TLS certificate issuer support"
+			default y
 
 		config SINGBOX_WITH_CLASH_API
 			bool "Build with Clash API support"
@@ -65,6 +50,7 @@ define Package/sing-box/config
 
 		config SINGBOX_WITH_DHCP
 			bool "Build with DHCP support, see DHCP DNS transport."
+			default y
 
 		config SINGBOX_WITH_ECH
 			bool "Build with TLS ECH extension support for TLS outbound"
@@ -72,9 +58,11 @@ define Package/sing-box/config
 
 		config SINGBOX_WITH_EMBEDDED_TOR
 			bool "Build with embedded Tor support"
+			default n
 
 		config SINGBOX_WITH_GRPC
 			bool "Build with standard gRPC support"
+			default y
 
 		config SINGBOX_WITH_GVISOR
 			bool "Build with gVisor support"
@@ -94,6 +82,7 @@ define Package/sing-box/config
 
 		config SINGBOX_WITH_V2RAY_API
 			bool "Build with V2Ray API support"
+			default y
 
 		config SINGBOX_WITH_WIREGUARD
 			bool "Build with WireGuard support"

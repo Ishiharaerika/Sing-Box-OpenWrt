@@ -137,16 +137,16 @@ define Package/sing-box-alpha/conffiles
 endef
 
 define Package/sing-box-alpha/install
-  $(INSTALL_DIR) $(1)/usr/bin/
-  $(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/sing-box-alpha $(1)/usr/bin/sing-box-alpha
+	$(INSTALL_DIR) $(1)/usr/bin/
+	$(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/sing-box-alpha $(1)/usr/bin/sing-box-alpha
 
-  $(INSTALL_DIR) $(1)/etc/sing-box-alpha
-  $(INSTALL_DATA) $(PKG_BUILD_DIR)/release/config/config.json $(1)/etc/sing-box-alpha
+	$(INSTALL_DIR) $(1)/etc/sing-box-alpha
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/release/config/config.json $(1)/etc/sing-box-alpha
 
-  $(INSTALL_DIR) $(1)/etc/config/
-  $(INSTALL_CONF) ./files/sing-box-alpha.conf $(1)/etc/config/sing-box-alpha
-  $(INSTALL_DIR) $(1)/etc/init.d/
-  $(INSTALL_BIN) ./files/sing-box-alpha.init $(1)/etc/init.d/sing-box-alpha
+	$(INSTALL_DIR) $(1)/etc/config/
+	$(INSTALL_CONF) ./files/sing-box-alpha.conf $(1)/etc/config/sing-box-alpha
+	$(INSTALL_DIR) $(1)/etc/init.d/
+	$(INSTALL_BIN) ./files/sing-box-alpha.init $(1)/etc/init.d/sing-box-alpha
 endef
 
 $(eval $(call BuildPackage,sing-box-alpha))

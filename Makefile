@@ -46,107 +46,106 @@ define Package/sing-box-alpha
   URL:=https://sing-box.sagernet.org
   DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle +kmod-inet-diag +kmod-tun
   USERID:=sing-box-alpha=5566:sing-box-alpha=5566
-  ONLY_FOR_ARCH:=x86_64
 endef
 
 define Package/sing-box-alpha/description
   sing-box-alpha for test.
 endef
 
-define Package/sing-box-alpha/config
-  menu "Select build options"
-    depends on PACKAGE_sing-box-alpha
+define Package/sing-box/config
+	menu "Select build options"
+		depends on PACKAGE_sing-box
 
-    config SINGBOX_WITH_ACME
-      bool "Build with ACME TLS certificate issuer support"
+		config SINGBOX_WITH_ACME
+			bool "Build with ACME TLS certificate issuer support"
 
-    config SINGBOX_WITH_CLASH_API
-      bool "Build with Clash API support"
-      default y
+		config SINGBOX_WITH_CLASH_API
+			bool "Build with Clash API support"
+			default y
 
-    config SINGBOX_WITH_DHCP
-      bool "Build with DHCP support, see DHCP DNS transport."
+		config SINGBOX_WITH_DHCP
+			bool "Build with DHCP support, see DHCP DNS transport."
 
-    config SINGBOX_WITH_ECH
-      bool "Build with TLS ECH extension support for TLS outbound"
-      default y
+		config SINGBOX_WITH_ECH
+			bool "Build with TLS ECH extension support for TLS outbound"
+			default y
 
-    config SINGBOX_WITH_EMBEDDED_TOR
-      bool "Build with embedded Tor support"
+		config SINGBOX_WITH_EMBEDDED_TOR
+			bool "Build with embedded Tor support"
 
-    config SINGBOX_WITH_GRPC
-      bool "Build with standard gRPC support"
+		config SINGBOX_WITH_GRPC
+			bool "Build with standard gRPC support"
 
-    config SINGBOX_WITH_GVISOR
-      bool "Build with gVisor support"
-      default y
+		config SINGBOX_WITH_GVISOR
+			bool "Build with gVisor support"
+			default y
 
-    config SINGBOX_WITH_QUIC
-      bool "Build with QUIC support"
-      default y
+		config SINGBOX_WITH_QUIC
+			bool "Build with QUIC support"
+			default y
 
-    config SINGBOX_WITH_REALITY_SERVER
-      bool "Build with reality TLS server support, see TLS."
-      default y
+		config SINGBOX_WITH_REALITY_SERVER
+			bool "Build with reality TLS server support, see TLS."
+			default y
 
-    config SINGBOX_WITH_UTLS
-      bool "Build with uTLS support for TLS outbound"
-      default y
+		config SINGBOX_WITH_UTLS
+			bool "Build with uTLS support for TLS outbound"
+			default y
 
-    config SINGBOX_WITH_V2RAY_API
-      bool "Build with V2Ray API support"
+		config SINGBOX_WITH_V2RAY_API
+			bool "Build with V2Ray API support"
 
-    config SINGBOX_WITH_WIREGUARD
-      bool "Build with WireGuard support"
-      default y
-  endmenu
+		config SINGBOX_WITH_WIREGUARD
+			bool "Build with WireGuard support"
+			default y
+	endmenu
 endef
 
 PKG_CONFIG_DEPENDS:= \
-  CONFIG_SINGBOX_WITH_ACME \
-  CONFIG_SINGBOX_WITH_CLASH_API \
-  CONFIG_SINGBOX_WITH_DHCP \
-  CONFIG_SINGBOX_WITH_ECH \
-  CONFIG_SINGBOX_WITH_EMBEDDED_TOR \
-  CONFIG_SINGBOX_WITH_GRPC \
-  CONFIG_SINGBOX_WITH_GVISOR \
-  CONFIG_SINGBOX_WITH_QUIC \
-  CONFIG_SINGBOX_WITH_REALITY_SERVER \
-  CONFIG_SINGBOX_WITH_UTLS \
-  CONFIG_SINGBOX_WITH_V2RAY_API \
-  CONFIG_SINGBOX_WITH_WIREGUARD
+	CONFIG_SINGBOX_WITH_ACME \
+	CONFIG_SINGBOX_WITH_CLASH_API \
+	CONFIG_SINGBOX_WITH_DHCP \
+	CONFIG_SINGBOX_WITH_ECH \
+	CONFIG_SINGBOX_WITH_EMBEDDED_TOR \
+	CONFIG_SINGBOX_WITH_GRPC \
+	CONFIG_SINGBOX_WITH_GVISOR \
+	CONFIG_SINGBOX_WITH_QUIC \
+	CONFIG_SINGBOX_WITH_REALITY_SERVER \
+	CONFIG_SINGBOX_WITH_UTLS \
+	CONFIG_SINGBOX_WITH_V2RAY_API \
+	CONFIG_SINGBOX_WITH_WIREGUARD
 
 GO_PKG_TAGS:=$(subst $(space),$(comma),$(strip \
-  $(if $(CONFIG_SINGBOX_WITH_ACME),with_acme) \
-  $(if $(CONFIG_SINGBOX_WITH_CLASH_API),with_clash_api) \
-  $(if $(CONFIG_SINGBOX_WITH_DHCP),with_dhcp) \
-  $(if $(CONFIG_SINGBOX_WITH_ECH),with_ech) \
-  $(if $(CONFIG_SINGBOX_WITH_EMBEDDED_TOR),with_embedded_tor) \
-  $(if $(CONFIG_SINGBOX_WITH_GRPC),with_grpc) \
-  $(if $(CONFIG_SINGBOX_WITH_GVISOR),with_gvisor) \
-  $(if $(CONFIG_SINGBOX_WITH_QUIC),with_quic) \
-  $(if $(CONFIG_SINGBOX_WITH_REALITY_SERVER),with_reality_server) \
-  $(if $(CONFIG_SINGBOX_WITH_UTLS),with_utls) \
-  $(if $(CONFIG_SINGBOX_WITH_V2RAY_API),with_v2ray_api) \
-  $(if $(CONFIG_SINGBOX_WITH_WIREGUARD),with_wireguard) \
+	$(if $(CONFIG_SINGBOX_WITH_ACME),with_acme) \
+	$(if $(CONFIG_SINGBOX_WITH_CLASH_API),with_clash_api) \
+	$(if $(CONFIG_SINGBOX_WITH_DHCP),with_dhcp) \
+	$(if $(CONFIG_SINGBOX_WITH_ECH),with_ech) \
+	$(if $(CONFIG_SINGBOX_WITH_EMBEDDED_TOR),with_embedded_tor) \
+	$(if $(CONFIG_SINGBOX_WITH_GRPC),with_grpc) \
+	$(if $(CONFIG_SINGBOX_WITH_GVISOR),with_gvisor) \
+	$(if $(CONFIG_SINGBOX_WITH_QUIC),with_quic) \
+	$(if $(CONFIG_SINGBOX_WITH_REALITY_SERVER),with_reality_server) \
+	$(if $(CONFIG_SINGBOX_WITH_UTLS),with_utls) \
+	$(if $(CONFIG_SINGBOX_WITH_V2RAY_API),with_v2ray_api) \
+	$(if $(CONFIG_SINGBOX_WITH_WIREGUARD),with_wireguard) \
 ))
 
 define Package/sing-box-alpha/conffiles
-/etc/config/sing-box-alpha
-/etc/sing-box-alpha/
+/etc/config/sing-box
+/etc/sing-box/
 endef
 
 define Package/sing-box-alpha/install
 	$(INSTALL_DIR) $(1)/usr/bin/
-	$(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/sing-box-alpha $(1)/usr/bin/sing-box-alpha
+	$(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/sing-box $(1)/usr/bin/sing-box
 
-	$(INSTALL_DIR) $(1)/etc/sing-box-alpha
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/release/config/config.json $(1)/etc/sing-box-alpha
+	$(INSTALL_DIR) $(1)/etc/sing-box
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/release/config/config.json $(1)/etc/sing-box
 
 	$(INSTALL_DIR) $(1)/etc/config/
-	$(INSTALL_CONF) ./files/sing-box-alpha.conf $(1)/etc/config/sing-box-alpha
+	$(INSTALL_CONF) ./files/sing-box.conf $(1)/etc/config/sing-box
 	$(INSTALL_DIR) $(1)/etc/init.d/
-	$(INSTALL_BIN) ./files/sing-box-alpha.init $(1)/etc/init.d/sing-box-alpha
+	$(INSTALL_BIN) ./files/sing-box.init $(1)/etc/init.d/sing-box
 endef
 
 $(eval $(call BuildPackage,sing-box-alpha))

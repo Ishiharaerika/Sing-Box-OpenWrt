@@ -45,7 +45,7 @@ define Package/sing-box-alpha
 	CATEGORY:=Network
 	URL:=https://sing-box.sagernet.org
 	DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle +kmod-inet-diag +kmod-tun
-	USERID:=sing-box-alpha=5566:sing-box-alpha=5566
+	USERID:=sing-box=5566:sing-box=5566
 endef
 
 define Package/sing-box-alpha/description

@@ -41,15 +41,15 @@ include /home/erika/openwrt/include/package.mk
 include /home/erika/openwrt/feeds/packages/lang/golang/golang-package.mk
 
 define Package/sing-box-alpha
-  TITLE:=Just for test.
-  CATEGORY:=Network
-  URL:=https://sing-box.sagernet.org
-  DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle +kmod-inet-diag +kmod-tun
-  USERID:=sing-box-alpha=5566:sing-box-alpha=5566
+	TITLE:=Just for test.
+	CATEGORY:=Network
+	URL:=https://sing-box.sagernet.org
+	DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle +kmod-inet-diag +kmod-tun
+	USERID:=sing-box-alpha=5566:sing-box-alpha=5566
 endef
 
 define Package/sing-box-alpha/description
-  sing-box-alpha for test.
+	sing-box-alpha for test.
 endef
 
 define Package/sing-box/config

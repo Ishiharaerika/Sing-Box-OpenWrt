@@ -30,7 +30,7 @@ jobs:
 
       - name: Copy Makefile to OpenWrt package directory
         run: |
-          mkdir -p openwrt/package/sing-box 
+          mkdir -p /package/sing-box 
           cp sing-box/Makefile openwrt/package/sing-box/Makefile
 
       - name: Configure OpenWrt
@@ -42,7 +42,7 @@ jobs:
         run: |
           cd openwrt
           make {toolchain,target,package/fail2ban}/compile -j$(nproc)
-
+          
       - name: Build Sing-Box package
         run: |
           cd openwrt
@@ -51,7 +51,7 @@ jobs:
       - name: Find IPK files
         id: find_ipks
         run: |
-          echo "ipk_files=$(find bin -type f -name '*.ipk')" >> $GITHUB_OUTPUT
+          echo "ipk_files=$(find /bin -type f -name '*.ipk')" >> $GITHUB_OUTPUT
 
       - name: Upload IPK files
         uses: actions/upload-artifact@v4

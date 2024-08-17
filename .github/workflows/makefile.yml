@@ -41,12 +41,12 @@ jobs:
       - name: Rebuild necessary components
         run: |
           cd openwrt
-          make {toolchain,target,package/fail2ban}/compile -j$(nproc)
+          ccache make {toolchain,target,package/fail2ban}/compile -j$(nproc)
           
       - name: Build Sing-Box package
         run: |
           cd openwrt
-          make package/sing-box/compile -j$(nproc) 
+          make package/sing-box-alpha/compile -j$(nproc) CFLAGS="-O3" CXXFLAGS="-O3"
 
       - name: Find IPK files
         id: find_ipks

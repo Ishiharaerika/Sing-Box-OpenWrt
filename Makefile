@@ -5,8 +5,8 @@ PKG_VERSION:=1.10.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/Ishiharaerika/sing-box-alpha.git
-PKG_SOURCE_VERSION:=6478c7e0294f0887e15261bf7a4439b385136b81
+PKG_SOURCE_URL:=https://github.com/SagerNet/sing-box.git
+PKG_SOURCE_VERSION:=3bb02cb2bbffbbe28623fe4b370a1be64054511b
 PKG_MIRROR_HASH:=skip
 PKG_HASH:=skip
 
@@ -14,12 +14,15 @@ PKG_LICENSE:=GPL-3.0-or-later
 PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=IshiharaErika
 
+GO_PKG:=github.com/sagernet/sing-box
+GO_PKG_BUILD_PKG:=$(GO_PKG)/cmd/sing-box
+GO_PKG_WORK_DIR:=$(PKG_BUILD_DIR)/.go_work/build/src/$(GO_PKG)
+
 PKG_BUILD_DEPENDS:=golang/host
 PKG_BUILD_PARALLEL:=1
-PKG_BUILD_FLAGS:=no-mips16
+PKG_USE_MIPS16:=0
 
-GO_PKG:=github.com/Ishiharaerika/sing-box-alpha
-GO_PKG_BUILD_PKG:=$(GO_PKG)/cmd/sing-box
+GO_MOD_ARGS:=-mod=mod
 
 include $(INCLUDE_DIR)/package.mk
 include /home/erika/openwrt/feeds/packages/lang/golang/golang-package.mk

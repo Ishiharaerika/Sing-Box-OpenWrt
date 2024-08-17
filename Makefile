@@ -25,15 +25,15 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang-package.mk
 
 define Package/sing-box-alpha
-	TITLE:=Just for test.
-	CATEGORY:=Network
-	URL:=https://sing-box.sagernet.org
-	DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle +kmod-inet-diag +kmod-tun
-	USERID:=sing-box=5566:sing-box=5566
+  TITLE:=Just for test.
+  CATEGORY:=Network
+  URL:=https://sing-box.sagernet.org
+  DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle +kmod-inet-diag +kmod-tun
+  USERID:=sing-box=5566:sing-box=5566
 endef
 
 define Package/sing-box-alpha/description
-	sing-box-alpha for test.
+  sing-box-alpha for test.
 endef
 
 define Package/sing-box-alpha/config

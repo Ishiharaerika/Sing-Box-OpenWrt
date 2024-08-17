@@ -22,7 +22,7 @@ GO_PKG:=github.com/Ishiharaerika/sing-box-alpha
 GO_PKG_BUILD_PKG:=$(GO_PKG)/cmd/sing-box
 
 include $(INCLUDE_DIR)/package.mk
-include $(INCLUDE_DIR)/golang-package.mk
+include /home/erika/openwrt/feeds/packages/lang/golang/golang-package.mk
 
 define Package/sing-box-alpha
   TITLE:=Just for test.

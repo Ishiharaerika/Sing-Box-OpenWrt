@@ -1,0 +1,61 @@
+#!/bin/sh /etc/rc.common
+
+USE_PROCD=1
+START=99
+STOP=10
+NAME="sing-box"
+PROG="/usr/bin/sing-box"
+CONFFILE="/root/config.json"
+ENABLED_FLAG="/etc/sing-box_enabled"
+
+start_service() {
+    [ -f "$ENABLED_FLAG" ] || {
+        echo "$NAME is not enabled"
+        return 1
+    }
+    
+    [ -f "$CONFFILE" ] || {
+        echo "Config file $CONFFILE not found"
+        return 1
+    }
+    
+    local user="root"
+    local workdir="/usr/share/sing-box"
+    mkdir -p "$workdir"
+    chown $user:$user "$workdir"
+    
+    procd_open_instance
+    procd_set_param command "$PROG" run -c "$CONFFILE"
+    procd_set_param user "$user"
+    procd_set_param file "$CONFFILE"
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_set_param respawn
+    procd_close_instance
+    
+    procd_open_instance
+    procd_set_param command sh -c "while inotifywait -e modify,move_self,delete_self $CONFFILE; do /etc/init.d/$NAME reload; done"
+    procd_set_param user "$user"
+    procd_close_instance
+    
+    echo "$NAME service started"
+}
+
+service_triggers() {
+    procd_add_reload_trigger "$NAME"
+}
+
+reload_service() {
+    stop
+    start
+}
+
+enable() {
+    touch "$ENABLED_FLAG"
+    echo "$NAME has been enabled"
+}
+
+disable() {
+    rm -f "$ENABLED_FLAG"
+    echo "$NAME has been disabled"
+}

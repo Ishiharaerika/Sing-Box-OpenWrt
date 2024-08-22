@@ -31,7 +31,7 @@ define Package/sing-box-alpha
   TITLE:=Just for test.
   CATEGORY:=Network
   URL:=https://sing-box.sagernet.org
-  DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle +kmod-inet-diag +kmod-tun
+  DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle +kmod-inet-diag +kmod-tun +inotifywait +inotifywatch +libinotifytools
   USERID:=sing-box=5566:sing-box=5566
 endef
 
